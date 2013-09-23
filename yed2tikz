@@ -1,19 +1,20 @@
 #! /bin/bash
 
-XSL=yed2tikz.xsl
+PROGDIR="$(dirname $0)"
+XSL="$PROGDIR/yed2tikz.xsl"
 XML=$1
-TEX=`echo $1 | sed -e 's/graphml/tex/'`
+TIKZ=`echo $1 | sed -e 's/\.graphml$/\.tikz/'`
 
-echo "\documentclass{standalone}
-\usepackage{tikz}
+echo "%\documentclass{scrartcl}
+%\usepackage{tikz}
 % We need lots of libraries...
-\usetikzlibrary{
-arrows,
+%\usetikzlibrary{
+%arrows,
 %calc,
 %fit,
 %patterns,
 %plotmarks,
-shapes.geometric,%
+%shapes.geometric,%
 %shapes.misc,
 %shapes.symbols,
 %shapes.arrows,
@@ -43,7 +44,7 @@ shapes.geometric,%
 %spy,
 %through,
 %turtle,
-positioning,%
+%positioning,%
 %scopes,
 %decorations.fractals,
 %decorations.shapes,
@@ -59,10 +60,10 @@ positioning,%
 %fpu,
 %svg.path,
 %external,
-}%
-\begin{document}
-" > $TEX 
+%}%
+%\begin{document}
+" > $TIKZ 
 
-xsltproc $XSL $XML >> $TEX 2>/dev/null
+xsltproc $XSL $XML >> $TIKZ 2>/dev/null
 
-echo "\end{document}" >> $TEX
+echo "%\end{document}" >> $TIKZ
